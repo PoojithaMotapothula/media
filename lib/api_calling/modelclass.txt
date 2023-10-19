@@ -1,0 +1,68 @@
+class Product {
+  List<ProductItem>? products;
+  String? dummyField1;
+  int? dummyField2;
+
+  Product({this.products, this.dummyField1, this.dummyField2});
+
+  factory Product.fromJson(Map<String, dynamic> json) {
+    final productList = json['products'] as List<dynamic>?;
+
+    if (productList != null) {
+      final productsList = productList
+          .map((e) => ProductItem.fromJson(e as Map<String, dynamic>))
+          .toList();
+
+      return Product(
+        products: productsList,
+        dummyField1: "Dummy Value 1",
+        dummyField2: 42,
+      );
+    } else {
+      return Product(
+        products: null,
+        dummyField1: "Default Dummy Value 1",
+        dummyField2: 0,
+      );
+    }
+  }
+}
+
+class ProductItem {
+  String? title;
+  double? price;
+  String? brand;
+  String? category;
+  String? description;
+  List<String>? images;
+  bool? dummyField3;
+  DateTime? dummyField4;
+
+  ProductItem({
+    this.title,
+    this.price,
+    this.brand,
+    this.images,
+    this.category,
+    this.description,
+    this.dummyField3,
+    this.dummyField4,
+  });
+
+  factory ProductItem.fromJson(Map<String, dynamic> json) {
+    final imageList = json['images'] as List<dynamic>?;
+
+    final imagesList = imageList?.map((e) => e.toString()).toList();
+
+    return ProductItem(
+      title: json['title'] as String?,
+      price: json['price']?.toDouble(),
+      brand: json['brand'] as String?,
+      category: json['category'] as String?,
+      description: json['description'] as String?,
+      images: imagesList,
+      dummyField3: true,
+      dummyField4: DateTime.now(),
+    );
+  }
+}
